@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.logo img {
+    width: 150px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.article {
+    margin-bottom: 20px;
+}
+
+.article-image {
+    max-width: 600px;
+    display: block;
+    margin-bottom: 10px;
+
+}
