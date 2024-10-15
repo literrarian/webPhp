@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form>
+    <label for="type">Тип:</label>
+    <select name="type" id="type">
+        <option value="">Выберите тип</option>
+    </select>
+
+    <label for="brand">Машина:</label>
+    <select name="brand" id="brand">
+        <option value="">Выберите бренд</option>
+    </select>
+
+    <label for="distance">Расстояние:</label>
+    <input type="number" id="distance" name="distance" min="0" required>
+    <p>Потребление: <span id="consumption">0</span> литров</p>
+</form>
+
+<script type="text/javascript">
+    // Helper function to make AJAX requests
+    function ajaxRequest(method, url, data, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, url, true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                callback(xhr.responseText);
+            }
+        };
+        xhr.send(data);
+    }
+
+    //тащим типы
+    window.onload = function () {
+        ajaxRequest('POST', 'funcs.php', 'action=fetchTypes', function (data) {
+            document.getElementById('type').innerHTML = '<option value="">Тип</option>' + data;
+            document.getElementById('brand').disabled = true;
+            document.getElementById('distance').disabled = true;
+        });
+    };
+
+    // тащим бренды под выбранный тип
+    document.getElementById('type').addEventListener('change', function () {
+        const type = this.value;
+        if (type) {
+            ajaxRequest('POST', 'funcs.php', 'action=fetchBrands&type=' + encodeURIComponent(type), function (data) {
+                const brandSelect = document.getElementById('brand');
+                brandSelect.disabled = false;
+                brandSelect.innerHTML = '<option value="">Выберите бренд</option>' + data;
+
+            });
+        } else {
+            document.getElementById('brand').disabled = true;
+            document.getElementById('brand').innerHTML = '<option value="">Выберите бренд</option>';
+            document.getElementById('distance').disabled = true;
+        }
+    });
+
+    // Enable distance input when a car type is selected
+    document.getElementById('brand').addEventListener('change', function () {
+        if (this.value) {
+            document.getElementById('distance').disabled = false;
+        } else {
+            document.getElementById('distance').disabled = true;
+        }
+    });
+
+    // Calculate oil consumption based on brand, type, and distance
+    document.getElementById('distance').addEventListener('input', function () {
+        const brand = document.getElementById('brand').value;
+        const type = document.getElementById('type').value;
+        const distance = this.value;
+        if (!distance) {
+            document.getElementById('consumption').innerText = "0";
+        } else if (brand && type && distance) {
+            ajaxRequest('POST', 'funcs.php', 'action=calculateConsumption&brand=' + encodeURIComponent(brand) + '&type=' + encodeURIComponent(type) + '&distance=' + encodeURIComponent(distance), function (data) {
+                document.getElementById('consumption').innerText = data;
+            });
+        }
+    });
+</script>
+</body>
+</html>
