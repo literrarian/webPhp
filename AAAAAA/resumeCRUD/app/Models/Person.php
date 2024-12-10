@@ -33,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
 class Person extends Model
 {
     use HasFactory;
+    protected $fillable = ['FIO','staff_id','Phone','Stage','Image'];
+    protected $guarded = ['id'];
     public function staff(){
         return $this->belongsTo(Staff::class);
     }

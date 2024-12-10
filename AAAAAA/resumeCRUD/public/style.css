@@ -1,4 +1,4 @@
-﻿body {background-image: url('Images/fon_04.gif');}
+﻿/*body {background-image: url('Images/fon_04.gif');}*/
 table {float:left; margin:10px; padding:0; width:200px; border-collapse:collapse;}
 td {border:1px dotted blue; margin:0;padding:0;height:5px;min-width:20px;}
 
@@ -6,7 +6,7 @@ td {border:1px dotted blue; margin:0;padding:0;height:5px;min-width:20px;}
 
 h1 {font-family: Verdana; font-size: 20pt;}
 
-#logo {background: url("Images/sprite.png") no-repeat 0 -160px; width:150px; height:30px;
+#logo {background: url('../storage/app/public/images/sprite.jpg') no-repeat 0 -160px; width:150px; height:30px;
 margin-left:20px; margin-bottom:0;
 display:inline-block; vertical-align:middle;}
 

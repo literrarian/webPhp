@@ -7,7 +7,7 @@
             <table>
                 <thead>
                 <tr>
-                    @foreach(array_keys((array) $persons[0]) as $header)
+                    @foreach(array_keys((array) $persons) as $header)
                         <th>{{ ucfirst($header) }}</th>
                     @endforeach
                 </tr>
